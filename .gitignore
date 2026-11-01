@@ -1,0 +1,21 @@
+# Compiled binaries and build outputs
+*.exe
+*.o
+*.obj
+*.out
+*.app
+*.pdb
+*.ilk
+
+# Editor and IDE configurations
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+Thumbs.db
+

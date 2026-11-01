@@ -47,12 +47,29 @@ for (const method of ['s13', 's38']) {
   close(evaluate(`integrateValues([0,1,2,3,4,5,6].map(x => (x/6)**2), 1/6, '${method}')`), 1/3);
   close(evaluate(`integrateValues([0,1,2,3,4,5,6].map(x => (x/6)**3), 1/6, '${method}')`), 1/4);
 }
+
+// Minimum interval boundary checks
+close(evaluate("integrateValues([0, 1], 1, 'trap')"), 0.5);
+close(evaluate("integrateValues([0, 1, 4], 1, 's13')"), 8/3);
+close(evaluate("integrateValues([0, 1, 8, 27], 1, 's38')"), 20.25);
+
 for (const text of ['2abc', '', 'Infinity', 'NaN', '0x10']) assert.ok(Number.isNaN(evaluate(`readNumber('${text}')`)));
 close(evaluate("readNumber('-1.25e2')"), -125);
-for (const code of ["checkRule('s13',3)", "checkRule('s38',4)", "checkRule('bad',6)",
-  "checkRule('trap',6.5)", "parseMeasurements('1, 2abc, 3')", "checkDomain('circle',-2,1)",
-  "checkDomain('ellipse',-3,1)", "checkDomain('hyperbola',-1,2)",
-  "checkDomain('log',0,2)", "checkDomain('sqrt',-1,2)"])
+for (const code of [
+  "checkRule('s13',3)", "checkRule('s38',4)", "checkRule('bad',6)",
+  "checkRule('trap',6.5)", "checkRule('trap',0)", "checkRule('trap',1001)",
+  "checkRule('s13',0)", "checkRule('s38',0)",
+  "parseMeasurements('1, 2abc, 3')", "parseMeasurements('')", "parseMeasurements('1')",
+  "checkDomain('circle',-2,1)", "checkDomain('circle',0,1.5)",
+  "checkDomain('ellipse',-3,1)", "checkDomain('ellipse',0,2.5)",
+  "checkDomain('hyperbola',-1,2)", "checkDomain('hyperbola',0,2)",
+  "checkDomain('log',0,2)", "checkDomain('log',-1,2)",
+  "checkDomain('sqrt',-1,2)",
+  "integrateValues([1, 2], -1, 'trap')",
+  "integrateValues([1, 2], 0, 'trap')",
+  "integrateValues([1, NaN], 1, 'trap')",
+  "integrateValues([1, Infinity], 1, 'trap')"
+])
   assert.throws(() => evaluate(code));
 
 // Switching methods updates the selected row, result, and steps together.
