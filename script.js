@@ -282,7 +282,7 @@ const MathEngine = (() => {
   }
 
   /**
-   * Public integration function with exact signature expected by test suite.
+   * Evaluates the composite numerical integral for a given set of ordinates.
    */
   function integrateValues(ys, h, method) {
     return calculateBreakdown(ys, h, method).integral;
@@ -910,7 +910,7 @@ const GraphRenderer = (() => {
 // 4. UI CONTROLLER (DOM Caching, State Transitions, Table & Steps Formatting)
 // ============================================================================
 
-// Top-level state variables exposed for test suite compatibility
+// Application State Variables
 let inputMode = "func";    // "func" | "values"
 let calcTarget = "area";    // "area" | "volume"
 let lastGraph = null;
@@ -1407,16 +1407,3 @@ window.addEventListener("resize", redrawGraph);
 // Initialize Default State
 applyDefaults();
 run();
-
-// ============================================================================
-// TOP-LEVEL SYMBOL EXPORTS (For test runner and browser context)
-// ============================================================================
-const SHAPES = MathEngine.SHAPES;
-const METHODS = MathEngine.METHODS;
-const integrateValues = MathEngine.integrateValues;
-const interpolationBounds = MathEngine.interpolationBounds;
-const lagrange = MathEngine.lagrange;
-const readNumber = ValidationEngine.readNumber;
-const parseMeasurements = ValidationEngine.parseMeasurements;
-const checkRule = ValidationEngine.checkRule;
-const checkDomain = ValidationEngine.checkDomain;

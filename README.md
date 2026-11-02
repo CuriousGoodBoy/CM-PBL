@@ -54,20 +54,17 @@ CM-PBL/
 │   │   ├── methods.h             # Core numerical integration prototypes & breakdown structures
 │   │   ├── shapes.h              # 15 Shape profiles, safe math helpers, & domain validators
 │   │   └── calculator_cli.h      # Console I/O, parsing, and steps display declarations
-│   ├── src/
-│   │   ├── methods_common.cpp    # Shared validation for ordinates and step sizes
-│   │   ├── trapezoidal.cpp       # Composite Trapezoidal implementation
-│   │   ├── simpson13.cpp         # Composite Simpson's 1/3 implementation
-│   │   ├── simpson38.cpp         # Composite Simpson's 3/8 implementation
-│   │   ├── shapes.cpp            # Predefined mathematical shapes & analytical integrals
-│   │   ├── calculator_cli.cpp    # CLI session handling, error formatting, & comparison tables
-│   │   └── main.cpp              # Interactive application entry point
-│   └── tests/
-│       └── test_methods.cpp      # Automated C++ unit tests (methods, constraints, & edge cases)
+│   └── src/
+│       ├── methods_common.cpp    # Shared validation for ordinates and step sizes
+│       ├── trapezoidal.cpp       # Composite Trapezoidal implementation
+│       ├── simpson13.cpp         # Composite Simpson's 1/3 implementation
+│       ├── simpson38.cpp         # Composite Simpson's 3/8 implementation
+│       ├── shapes.cpp            # Predefined mathematical shapes & analytical integrals
+│       ├── calculator_cli.cpp    # CLI session handling, error formatting, & comparison tables
+│       └── main.cpp              # Interactive application entry point
 ├── index.html                    # Responsive semantic UI layout
 ├── style.css                     # Modern dark/light theme styling & responsive grid
 ├── script.js                     # Refactored JavaScript architecture (MathEngine, Validation, GraphRenderer, UIController)
-├── tests.js                      # Automated Node.js integration & mathematical verification tests
 ├── .gitignore                    # Excludes compiled binaries, temporary objects, and IDE state
 └── README.md                     # Technical documentation and viva guide
 ```
@@ -82,7 +79,6 @@ CM-PBL/
 
 A C++17 compiler (such as GCC/MinGW, Clang, or MSVC) is required.
 
-### 1. Interactive Terminal Calculator
 From the project root:
 
 ```powershell
@@ -92,27 +88,9 @@ g++ -std=c++17 -Wall -Wextra -I cpp/include cpp/src/*.cpp -o calculator.exe
 
 *(On Linux / macOS, compile with `-o calculator` and run `./calculator`)*
 
-### 2. Automated C++ Unit Test Suite
-To run the automated C++ tests verifying all three integration methods, interval constraints, invalid inputs, and analytical references:
-
-```powershell
-g++ -std=c++17 -Wall -Wextra -I cpp/include cpp/src/methods_common.cpp cpp/src/trapezoidal.cpp cpp/src/simpson13.cpp cpp/src/simpson38.cpp cpp/src/shapes.cpp cpp/tests/test_methods.cpp -o test_runner.exe
-.\test_runner.exe
-```
-
 Both the web application and C++ executable enforce a maximum limit of 1000 intervals.
 
-## Verification & Testing
-
-### JavaScript Automated Tests
-Run the comprehensive suite using Node.js built-ins:
-
-```powershell
-node --check script.js
-node tests.js
-```
-
-### Known Verification Benchmarks on `[0, 1]` with `n = 6`:
+## Mathematical Benchmarks on `[0, 1]` with `n = 6`
 
 | Integrand | Trapezoidal | Simpson 1/3 | Simpson 3/8 | Analytical Exact |
 |---|---|---|---|---|
@@ -121,7 +99,6 @@ node tests.js
 | `x³` | `0.2569` | `0.2500` | `0.2500` | `1/4 = 0.2500` |
 
 - **Measured Cone Volume Benchmark**: Measured radii `[0, 1, 2]` with `h = 1.0` under Simpson's 1/3 rule yields integral `8/3`, giving solid volume `8 * pi / 3 ≈ 8.3776 cubic units`.
-- **Validation Tests**: Ensure malformed numbers, non-positive spacings, invalid method constraints, domain bounds (circle, ellipse, hyperbola, log, square root), and out-of-range interval counts fail predictably.
 
 ## Files and Viva Examination Guide
 
@@ -133,7 +110,6 @@ node tests.js
 | `cpp/src/simpson38.cpp` | Endpoint weights 1, interior weights repeating 3, 3, and 2; requires `n` divisible by 3 |
 | `cpp/src/shapes.cpp` | 15 profile functions with analytical antiderivatives `F` (area) and `G` (volume) |
 | `script.js` | Modular JavaScript architecture keeping numerical math separated from canvas rendering and DOM logic |
-| `tests.js` | Node.js headless DOM/canvas mock verifying numerical correctness, error branches, and UI updates |
 
 For the viva examination, be prepared to explain:
 1. Why Simpson's 1/3 rule requires pairs of intervals (`n` even) and Simpson's 3/8 requires triplets of intervals (`n` divisible by 3).

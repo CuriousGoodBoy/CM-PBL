@@ -33,7 +33,7 @@ struct Shape {
     function<bool(double, double)> isValidDomain; // Encapsulated domain validation
 };
 
-// Returns reference to the list of 15 predefined test shapes and curves
+// Returns reference to the list of 15 predefined shapes and curves
 const vector<Shape>& getPredefinedShapes();
 
 #endif // SHAPES_H
