@@ -110,9 +110,3 @@ Both the web application and C++ executable enforce a maximum limit of 1000 inte
 | `cpp/src/simpson38.cpp` | Endpoint weights 1, interior weights repeating 3, 3, and 2; requires `n` divisible by 3 |
 | `cpp/src/shapes.cpp` | 15 profile functions with analytical antiderivatives `F` (area) and `G` (volume) |
 | `script.js` | Modular JavaScript architecture keeping numerical math separated from canvas rendering and DOM logic |
-
-For the viva examination, be prepared to explain:
-1. Why Simpson's 1/3 rule requires pairs of intervals (`n` even) and Simpson's 3/8 requires triplets of intervals (`n` divisible by 3).
-2. Why volume of revolution integrates `f(x)²` multiplied by `pi` (disc integration method).
-3. How the fundamental theorem of calculus `F(b) - F(a)` provides the exact analytical benchmark.
-4. Why discrete measured data alone do not imply a known analytical integral and necessitate an explicit reference benchmark to evaluate difference.
