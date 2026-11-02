@@ -4,20 +4,22 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 // Composite Numerical Integration Methods
 // Ordinates must be finite, with equal positive spacing h.
 // Returns quiet_NaN for invalid data or interval constraints.
 
-double integrateTrapezoidal(const std::vector<double>& ys, double h);
-double integrateSimpson13(const std::vector<double>& ys, double h);
-double integrateSimpson38(const std::vector<double>& ys, double h);
+double integrateTrapezoidal(const vector<double>& ys, double h);
+double integrateSimpson13(const vector<double>& ys, double h);
+double integrateSimpson38(const vector<double>& ys, double h);
 
 // Internal validation helper for spacing and ordinates
-bool validateIntegrationInput(const std::vector<double>& ys, double h, int minIntervals);
+bool validateIntegrationInput(const vector<double>& ys, double h, int minIntervals);
 
 // Structured breakdown for step-by-step reporting and verification
 struct MethodBreakdown {
-    std::string methodName;
+    string methodName;
     double h = 0.0;
     int n = 0;
     double y0 = 0.0;
@@ -29,9 +31,9 @@ struct MethodBreakdown {
     bool isValid = false;
 };
 
-MethodBreakdown getTrapezoidalBreakdown(const std::vector<double>& ys, double h);
-MethodBreakdown getSimpson13Breakdown(const std::vector<double>& ys, double h);
-MethodBreakdown getSimpson38Breakdown(const std::vector<double>& ys, double h);
+MethodBreakdown getTrapezoidalBreakdown(const vector<double>& ys, double h);
+MethodBreakdown getSimpson13Breakdown(const vector<double>& ys, double h);
+MethodBreakdown getSimpson38Breakdown(const vector<double>& ys, double h);
 
 #endif // METHODS_H
 

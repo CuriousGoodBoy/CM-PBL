@@ -10,6 +10,8 @@
 #include "calculator_cli.h"
 #include <iostream>
 
+using namespace std;
+
 int main() {
     cli::displayBanner();
 
@@ -18,7 +20,6 @@ int main() {
         keepRunning = cli::runCalculatorCycle();
     }
 
-    std::cout << "\nThank you for using the Numerical Calculator. Goodbye!\n";
+    cout << "\nThank you for using the Numerical Calculator. Goodbye!\n";
     return 0;
 }
-

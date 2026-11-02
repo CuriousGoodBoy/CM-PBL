@@ -6,13 +6,15 @@
 #include <cmath>
 #include <limits>
 
-MethodBreakdown getTrapezoidalBreakdown(const std::vector<double>& ys, double h) {
+using namespace std;
+
+MethodBreakdown getTrapezoidalBreakdown(const vector<double>& ys, double h) {
     MethodBreakdown b;
     b.methodName = "Trapezoidal Rule";
     b.h = h;
     b.n = static_cast<int>(ys.size()) - 1;
     if (!validateIntegrationInput(ys, h, 1)) {
-        b.integral = std::numeric_limits<double>::quiet_NaN();
+        b.integral = numeric_limits<double>::quiet_NaN();
         b.isValid = false;
         return b;
     }
@@ -30,8 +32,8 @@ MethodBreakdown getTrapezoidalBreakdown(const std::vector<double>& ys, double h)
     return b;
 }
 
-double integrateTrapezoidal(const std::vector<double>& ys, double h) {
+double integrateTrapezoidal(const vector<double>& ys, double h) {
     MethodBreakdown b = getTrapezoidalBreakdown(ys, h);
-    return b.isValid ? b.integral : std::numeric_limits<double>::quiet_NaN();
+    return b.isValid ? b.integral : numeric_limits<double>::quiet_NaN();
 }
 

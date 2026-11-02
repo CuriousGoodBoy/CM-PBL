@@ -9,32 +9,34 @@
 #include <limits>
 #include <vector>
 
+using namespace std;
+
 namespace {
 
-void assertClose(double actual, double expected, double eps = 1e-10, const std::string& msg = "") {
-    if (std::isnan(actual) || std::isnan(expected) || std::fabs(actual - expected) > eps) {
-        std::cerr << "Assertion failed: " << actual << " != " << expected << " (eps: " << eps << ") " << msg << "\n";
-        std::exit(1);
+void assertClose(double actual, double expected, double eps = 1e-10, const string& msg = "") {
+    if (isnan(actual) || isnan(expected) || fabs(actual - expected) > eps) {
+        cerr << "Assertion failed: " << actual << " != " << expected << " (eps: " << eps << ") " << msg << "\n";
+        exit(1);
     }
 }
 
-void assertTrue(bool condition, const std::string& msg = "") {
+void assertTrue(bool condition, const string& msg = "") {
     if (!condition) {
-        std::cerr << "Assertion failed: " << msg << "\n";
-        std::exit(1);
+        cerr << "Assertion failed: " << msg << "\n";
+        exit(1);
     }
 }
 
 } // namespace
 
 int main() {
-    std::cout << "Running C++ Numerical Methods Unit Tests...\n";
+    cout << "Running C++ Numerical Methods Unit Tests...\n";
 
     // 1. Linear function f(x) = x on [0, 1], n = 6, h = 1/6
     const double h = 1.0 / 6.0;
-    std::vector<double> linear;
-    std::vector<double> quadratic;
-    std::vector<double> cubic;
+    vector<double> linear;
+    vector<double> quadratic;
+    vector<double> cubic;
     for (int i = 0; i <= 6; ++i) {
         double x = i * h;
         linear.push_back(x);
@@ -59,32 +61,32 @@ int main() {
 
     // 2. Interval constraint checks (parity and divisibility)
     // n = 3 (4 points): Trapezoidal valid, S13 invalid (odd), S38 valid
-    std::vector<double> n3(4, 1.0);
-    assertTrue(!std::isnan(integrateTrapezoidal(n3, 0.1)), "Trapezoidal allows n = 3");
-    assertTrue(std::isnan(integrateSimpson13(n3, 0.1)), "Simpson 1/3 rejects odd n = 3");
-    assertTrue(!std::isnan(integrateSimpson38(n3, 0.1)), "Simpson 3/8 allows n = 3");
+    vector<double> n3(4, 1.0);
+    assertTrue(!isnan(integrateTrapezoidal(n3, 0.1)), "Trapezoidal allows n = 3");
+    assertTrue(isnan(integrateSimpson13(n3, 0.1)), "Simpson 1/3 rejects odd n = 3");
+    assertTrue(!isnan(integrateSimpson38(n3, 0.1)), "Simpson 3/8 allows n = 3");
 
     // n = 4 (5 points): S13 valid, S38 invalid (not div by 3)
-    std::vector<double> n4(5, 1.0);
-    assertTrue(!std::isnan(integrateSimpson13(n4, 0.1)), "Simpson 1/3 allows even n = 4");
-    assertTrue(std::isnan(integrateSimpson38(n4, 0.1)), "Simpson 3/8 rejects n = 4");
+    vector<double> n4(5, 1.0);
+    assertTrue(!isnan(integrateSimpson13(n4, 0.1)), "Simpson 1/3 allows even n = 4");
+    assertTrue(isnan(integrateSimpson38(n4, 0.1)), "Simpson 3/8 rejects n = 4");
 
     // 3. Validation and edge cases: non-finite data, invalid h
-    assertTrue(std::isnan(integrateTrapezoidal(linear, -0.1)), "Trapezoidal rejects negative h");
-    assertTrue(std::isnan(integrateTrapezoidal(linear, 0.0)), "Trapezoidal rejects zero h");
-    assertTrue(std::isnan(integrateTrapezoidal(linear, std::numeric_limits<double>::quiet_NaN())), "Trapezoidal rejects NaN h");
+    assertTrue(isnan(integrateTrapezoidal(linear, -0.1)), "Trapezoidal rejects negative h");
+    assertTrue(isnan(integrateTrapezoidal(linear, 0.0)), "Trapezoidal rejects zero h");
+    assertTrue(isnan(integrateTrapezoidal(linear, numeric_limits<double>::quiet_NaN())), "Trapezoidal rejects NaN h");
 
-    std::vector<double> withNan = linear;
-    withNan[2] = std::numeric_limits<double>::quiet_NaN();
-    assertTrue(std::isnan(integrateTrapezoidal(withNan, h)), "Trapezoidal rejects NaN ordinate");
-    assertTrue(std::isnan(integrateSimpson13(withNan, h)), "Simpson 1/3 rejects NaN ordinate");
-    assertTrue(std::isnan(integrateSimpson38(withNan, h)), "Simpson 3/8 rejects NaN ordinate");
+    vector<double> withNan = linear;
+    withNan[2] = numeric_limits<double>::quiet_NaN();
+    assertTrue(isnan(integrateTrapezoidal(withNan, h)), "Trapezoidal rejects NaN ordinate");
+    assertTrue(isnan(integrateSimpson13(withNan, h)), "Simpson 1/3 rejects NaN ordinate");
+    assertTrue(isnan(integrateSimpson38(withNan, h)), "Simpson 3/8 rejects NaN ordinate");
 
     // Empty or single element
-    std::vector<double> single = {1.0};
-    assertTrue(std::isnan(integrateTrapezoidal(single, h)), "Trapezoidal requires at least 2 points");
-    assertTrue(std::isnan(integrateSimpson13(single, h)), "Simpson 1/3 requires at least 3 points");
-    assertTrue(std::isnan(integrateSimpson38(single, h)), "Simpson 3/8 requires at least 4 points");
+    vector<double> single = {1.0};
+    assertTrue(isnan(integrateTrapezoidal(single, h)), "Trapezoidal requires at least 2 points");
+    assertTrue(isnan(integrateSimpson13(single, h)), "Simpson 1/3 requires at least 3 points");
+    assertTrue(isnan(integrateSimpson38(single, h)), "Simpson 3/8 requires at least 4 points");
 
     // 4. Breakdown struct verification
     MethodBreakdown bTrap = getTrapezoidalBreakdown(quadratic, h);
@@ -103,7 +105,7 @@ int main() {
 
     // 5. Measured cone volume benchmark: radii 0, 1, 2 with h = 1.0
     // r^2 = 0, 1, 4. Simpson 1/3: (1/3) * (0 + 4 + 4*1) = 8/3. Volume = 8*pi/3
-    std::vector<double> coneRadiiSq = {0.0, 1.0, 4.0};
+    vector<double> coneRadiiSq = {0.0, 1.0, 4.0};
     double coneVolIntegral = integrateSimpson13(coneRadiiSq, 1.0);
     assertClose(coneVolIntegral, 8.0 / 3.0, 1e-10, "Cone volume integral 8/3");
     assertClose(coneVolIntegral * PI_VAL, 8.0 * PI_VAL / 3.0, 1e-10, "Cone volume with pi");
@@ -142,7 +144,6 @@ int main() {
     assertTrue(sqrtShape.isValidDomain(0.0, 4.0), "Sqrt domain valid");
     assertTrue(!sqrtShape.isValidDomain(-0.1, 4.0), "Sqrt domain invalid negative");
 
-    std::cout << "All C++ numerical, validation, and domain tests passed successfully!\n";
+    cout << "All C++ numerical, validation, and domain tests passed successfully!\n";
     return 0;
 }
-

@@ -7,13 +7,15 @@
 #include <cmath>
 #include <limits>
 
-MethodBreakdown getSimpson13Breakdown(const std::vector<double>& ys, double h) {
+using namespace std;
+
+MethodBreakdown getSimpson13Breakdown(const vector<double>& ys, double h) {
     MethodBreakdown b;
     b.methodName = "Simpson's 1/3 Rule";
     b.h = h;
     b.n = static_cast<int>(ys.size()) - 1;
     if (!validateIntegrationInput(ys, h, 2) || (b.n % 2 != 0)) {
-        b.integral = std::numeric_limits<double>::quiet_NaN();
+        b.integral = numeric_limits<double>::quiet_NaN();
         b.isValid = false;
         return b;
     }
@@ -35,8 +37,8 @@ MethodBreakdown getSimpson13Breakdown(const std::vector<double>& ys, double h) {
     return b;
 }
 
-double integrateSimpson13(const std::vector<double>& ys, double h) {
+double integrateSimpson13(const vector<double>& ys, double h) {
     MethodBreakdown b = getSimpson13Breakdown(ys, h);
-    return b.isValid ? b.integral : std::numeric_limits<double>::quiet_NaN();
+    return b.isValid ? b.integral : numeric_limits<double>::quiet_NaN();
 }
 

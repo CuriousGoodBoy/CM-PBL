@@ -7,13 +7,15 @@
 #include <cmath>
 #include <limits>
 
-MethodBreakdown getSimpson38Breakdown(const std::vector<double>& ys, double h) {
+using namespace std;
+
+MethodBreakdown getSimpson38Breakdown(const vector<double>& ys, double h) {
     MethodBreakdown b;
     b.methodName = "Simpson's 3/8 Rule";
     b.h = h;
     b.n = static_cast<int>(ys.size()) - 1;
     if (!validateIntegrationInput(ys, h, 3) || (b.n % 3 != 0)) {
-        b.integral = std::numeric_limits<double>::quiet_NaN();
+        b.integral = numeric_limits<double>::quiet_NaN();
         b.isValid = false;
         return b;
     }
@@ -35,8 +37,8 @@ MethodBreakdown getSimpson38Breakdown(const std::vector<double>& ys, double h) {
     return b;
 }
 
-double integrateSimpson38(const std::vector<double>& ys, double h) {
+double integrateSimpson38(const vector<double>& ys, double h) {
     MethodBreakdown b = getSimpson38Breakdown(ys, h);
-    return b.isValid ? b.integral : std::numeric_limits<double>::quiet_NaN();
+    return b.isValid ? b.integral : numeric_limits<double>::quiet_NaN();
 }
 
